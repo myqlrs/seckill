@@ -1,0 +1,46 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+    resources:
+      add-mappings: true
+      cache-period: 3600
+      chain:
+        cache: true
+        enabled: true
+        gzipped: true
+        html-application-cache: true
+      static-locations: classpath:/static/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 1800000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      auto-commit: true
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+#Mybatis-plus配置
+mybatis-plus:
+  #  配置Mapper.xml映射文件
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  #  配置Mybatis数据返回类型别名（默认别名是类名）
+  type-aliases-package: com.myq.seckill.pojo
+
+
+#Mybatis SQL打印
+logging:
+  level:
+    com.myq.seckill.mapper: debug
+
