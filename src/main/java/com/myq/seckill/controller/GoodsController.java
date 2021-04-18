@@ -18,20 +18,18 @@ public class GoodsController {
 
     /**
      * 跳转到商品列表
-     * @param session
      * @param model
-     * @param ticket
      * @return
      */
-    @RequestMapping("list")
-    public String toList(HttpSession session, Model model,@CookieValue("userTicket") String ticket){
-        if (!StringUtils.isEmpty(ticket)) {
+    public String toList(Model model,User user){
+        /*if (!StringUtils.isEmpty(ticket)) {
             return "login";
         }
-        User user = (User) session.getAttribute(ticket);
+//        User user = (User) session.getAttribute(ticket);
+        User user = userService.getUserByCookie(ticket,request,response);
         if(user == null){
             return "login";
-        }
+        }*/
         model.addAttribute("user",user);
         return "goodslist";
 

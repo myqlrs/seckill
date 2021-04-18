@@ -8,7 +8,9 @@ import com.myq.seckill.service.UserService;
 import com.myq.seckill.utils.*;
 import com.myq.seckill.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +28,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     //登录逻辑
     @Override
@@ -46,9 +50,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         //生成Cookie
         String ticket = UUIDUtil.uuid();
-        request.getSession().setAttribute(ticket,user);
+//        request.getSession().setAttribute(ticket,user);
+        redisTemplate.opsForValue().set("user:" + ticket,user);
         CookieUtils.setCookie(request,response,"userTicket",ticket);
         return RespBean.success();
+    }
+
+    @Override
+    public User getUserByCookie(String userticket, HttpServletRequest request, HttpServletResponse response) {
+        if(StringUtils.isEmpty(userticket)){
+            return null;
+        }
+        User user = (User) redisTemplate.opsForValue().get("user:" + userticket);
+        if(user!=null){
+            CookieUtils.setCookie(request,response,"userTicket",userticket);
+        }
+        return user;
     }
 
 }
