@@ -53,6 +53,4 @@ public class SeckillGoods implements Serializable {
      * 秒杀结束时间
      */
     private Date endDate;
-
-
 }

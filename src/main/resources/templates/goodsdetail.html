@@ -15,7 +15,7 @@
 
 <div class="top">
     <span th:if="${user == null}"> 您还没有登录，请登陆后再操作</span>
-    <span th:if="${user != null}"> <span th:text="'欢迎您 '+${user.userName}"></span></span>
+    <span th:if="${user != null}"> <span th:text="'欢迎您 '+${user.nickname}"></span></span>
     <span>没有收货地址的提示。。。</span>
 </div>
 <div class="goods">
@@ -52,7 +52,7 @@
                 <span th:text="${goods.stockCount}"></span>
             </div>
 
-            <form id="miaoshaForm" method="post" action="/seckill/do_seckill">
+            <form id="miaoshaForm" method="post" action="/seckill/doSeckill">
                 <button class="btn btn-primary btn-block" type="submit" id="buyButton">马上抢...</button>
                 <input type="hidden" name="goodsId" th:value="${goods.id}"/>
             </form>

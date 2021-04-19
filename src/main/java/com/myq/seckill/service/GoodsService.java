@@ -2,6 +2,9 @@ package com.myq.seckill.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myq.seckill.entity.Goods;
+import com.myq.seckill.vo.GoodsVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,16 @@ import com.myq.seckill.entity.Goods;
  */
 public interface GoodsService extends IService<Goods> {
 
+    /**
+     * 获取商品列表
+     * @return
+     */
+    List<GoodsVo> findGoodsVo();
+
+    /**
+     * 获取商品详情
+     * @param goodsId
+     * @return
+     */
+    GoodsVo findGoodsVoByGoodsId(Long goodsId);
 }
