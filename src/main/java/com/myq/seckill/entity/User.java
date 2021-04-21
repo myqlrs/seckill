@@ -40,7 +40,7 @@ public class User implements Serializable {
     /**
      * 盐
      */
-    private String slat;
+    private String salt;
 
     /**
      * 头像

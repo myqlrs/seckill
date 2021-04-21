@@ -45,7 +45,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
         }
         //判断密码是否正确
-        if(!MD5Util.formPassToDBPass(password,user.getSlat()).equals(user.getPassword())){
+        if(!MD5Util.formPassToDBPass(password,user.getSalt()).equals(user.getPassword())){
             throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
         }
         //生成Cookie
@@ -53,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //        request.getSession().setAttribute(ticket,user);
         redisTemplate.opsForValue().set("user:" + ticket,user);
         CookieUtils.setCookie(request,response,"userTicket",ticket);
-        return RespBean.success();
+        return RespBean.success(ticket);
     }
 
     @Override
